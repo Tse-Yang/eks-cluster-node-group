@@ -48,7 +48,7 @@ Reference: <https://docs.aws.amazon.com/eks/latest/userguide/creating-a-vpc.html
 - Default CIDR blocks
 - Submit
 
-<img src="images/create-stack.png" alt="Create stack" width="600">
+<img src="images/create-stack.png" alt="Create stack" width="600"><br><br><br>
 
 Wait until the stack status is `CREATE_COMPLETE`.
 
