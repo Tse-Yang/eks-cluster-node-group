@@ -69,7 +69,7 @@ Amazon EKS → Create cluster → **Custom configuration**
 
 Click **Create cluster**. It becomes active after about 10–15 minutes.
 
-<img src="images/subnets.png" alt="Specify networking" width="600"> <br> <img src="images/eks-cluster.png" alt="EKS cluster active" width="600">
+<img src="images/subnets.png" alt="Specify networking" width="600"> <br><br><br><br> <img src="images/eks-cluster.png" alt="EKS cluster active" width="600">
 
 ### 4. Connect kubectl to the cluster
 
