@@ -121,7 +121,7 @@ When the node group is active, the EC2 instances join the cluster:
 kubectl get nodes     # shows the 2 worker nodes
 ```
 
-<img src="images/nodes-ready-on-eks-node-group.png" alt="Nodes in the node group" width="600">
+<img src="images/nodes-ready-on-eks-node-group.png" alt="Nodes in the node group" width="600"> <br><br><br>
 
 <img src="images/two-instances-running.png" alt="kubectl get nodes" width="600">
 
@@ -256,7 +256,7 @@ kubectl get svc       # shows the external DNS name
 
 A load balancer is created automatically for the `LoadBalancer` service. Its DNS name matches the external address shown by `kubectl get svc`. Open it in your browser to access the app.
 
-<img src="images/load-balancer-dns.png" alt="Load balancer DNS name" width="600">
+<img src="images/load-balancer-dns.png" alt="Load balancer DNS name" width="600"> <br><br><br>
 
 <img src="images/welcome-to-nginx.png" alt="Welcome to nginx" width="600">
 
