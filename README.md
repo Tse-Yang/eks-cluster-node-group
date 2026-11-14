@@ -80,9 +80,8 @@ kubectl cluster-info
 kubectl get nodes
 ```
 
-`update-kubeconfig` adds the cluster to your local kubeconfig. `kubectl cluster-info` should show the same API server endpoint as the console. `kubectl get nodes` returns nothing yet because there are no worker nodes.
+`aws configure list` shows your default region (mine is eu-central-2). `..update-kubeconfig` uses that region to find the cluster and adds it to your local kubeconfig; if no default region is set, add `--region <your-region>` (the region where you created the cluster). `kubectl cluster-info` should show the same API server endpoint as the console. `kubectl get nodes` returns nothing yet because there are no worker nodes.
 
-My default region is `eu-central-2`. If your default region is not set, add `--region`.
 
 <img src="images/cluster-info.png" alt="kubectl cluster-info" width="600">
 
