@@ -31,7 +31,7 @@ This role lets AWS manage and create cluster components on your behalf.
 - Keep the suggested permission policy (`AmazonEKSClusterPolicy`)
 - Role name: `eks-cluster-role`
 
-![EKS cluster role](images/eks-cluster-role.png)
+<img src="images/eks-cluster-role.png" alt="EKS cluster role" width="600">
 
 ### 2. Create a VPC for the worker nodes
 
@@ -48,11 +48,11 @@ Reference: <https://docs.aws.amazon.com/eks/latest/userguide/creating-a-vpc.html
 - Default CIDR blocks
 - Submit
 
-![Create stack](images/create-stack.png)
+<img src="images/create-stack.png" alt="Create stack" width="600">
 
 Wait until the stack status is `CREATE_COMPLETE`.
 
-![VPC stack info](images/eks-worker-node-vpc-stack-info.png)
+<img src="images/eks-worker-node-vpc-stack-info.png" alt="VPC stack info" width="600">
 
 Open the stack's **Outputs** tab. You need the **security group**, **VPC ID** and **subnets** in the next step.
 
@@ -69,9 +69,9 @@ Amazon EKS → Create cluster → **Custom configuration**
 
 Click **Create cluster**. It becomes active after about 10–15 minutes.
 
-![Specify networking](images/subnets.png)
+<img src="images/subnets.png" alt="Specify networking" width="600">
 
-![EKS cluster active](images/eks-cluster.png)
+<img src="images/eks-cluster.png" alt="EKS cluster active" width="600">
 
 ### 4. Connect kubectl to the cluster
 
@@ -86,7 +86,7 @@ kubectl get nodes
 
 My default region is `eu-central-2`. If your default region is not set, add `--region`.
 
-![kubectl cluster-info](images/cluster-info.png)
+<img src="images/cluster-info.png" alt="kubectl cluster-info" width="600">
 
 ### 5. Create the node group IAM role
 
@@ -99,7 +99,7 @@ The kubelet on each worker node (EC2 instance) needs permissions through an IAM 
    - `AmazonEKS_CNI_Policy` – networking between pods/nodes and other AWS services
 - Role name: `eks-node-group-role`
 
-![Node group role](images/eks-node-group-role.png)
+<img src="images/eks-node-group-role.png" alt="Node group role" width="600">
 
 ### 6. Create the node group
 
@@ -115,7 +115,7 @@ EKS → Clusters → `eks-cluster-test` → Compute → **Add node group**
 - **Subnets:** the 4 subnets from the VPC stack (fine for a demo; for production, use private subnets only)
 - **Remote access:** enabled, with an EC2 key pair (used for testing and troubleshooting; disable in production)
 
-![Node group](images/eks-node-group.png)
+<img src="images/eks-node-group.png" alt="Node group" width="600">
 
 When the node group is active, the EC2 instances join the cluster:
 
@@ -123,13 +123,13 @@ When the node group is active, the EC2 instances join the cluster:
 kubectl get nodes     # shows the 2 worker nodes
 ```
 
-![Nodes in the node group](images/nodes-ready-on-eks-node-group.png)
+<img src="images/nodes-ready-on-eks-node-group.png" alt="Nodes in the node group" width="600">
 
-![kubectl get nodes](images/two-instances-running.png)
+<img src="images/two-instances-running.png" alt="kubectl get nodes" width="600">
 
 An Auto Scaling Group is created automatically for the node group:
 
-![Auto Scaling Group](images/asg.png)
+<img src="images/asg.png" alt="Auto Scaling Group" width="600">
 
 ### 7. Configure auto scaling
 
@@ -151,7 +151,7 @@ IAM → Policies → Create policy (JSON editor), name: `ClusterAutoscalerPolicy
 
 The policy allows the EC2 (list) and EC2 Auto Scaling (list, write) API calls the autoscaler needs.
 
-![Custom policy](images/custom-policy.png)
+<img src="images/custom-policy.png" alt="Custom policy" width="600">
 
 #### 7.2 Register the EKS OIDC provider in IAM
 
@@ -168,7 +168,7 @@ The policy allows the EC2 (list) and EC2 Auto Scaling (list, write) API calls th
 - Attach `ClusterAutoscalerPolicy`
 - Role name: `EKSServiceAccountRole`
 
-![EKSServiceAccountRole](images/EKS-serviceAccount-Role.png)
+<img src="images/EKS-serviceAccount-Role.png" alt="EKSServiceAccountRole" width="600">
 
 #### 7.4 Check the Auto Scaling Group tags
 
@@ -179,7 +179,7 @@ The autoscaler finds the Auto Scaling Group through tags. EKS adds them to the m
 | `k8s.io/cluster-autoscaler/enabled` | `true` |
 | `k8s.io/cluster-autoscaler/eks-cluster-test` | `owned` |
 
-![ASG tags](images/asg-tags.png)
+<img src="images/asg-tags.png" alt="ASG tags" width="600">
 
 #### 7.5 Deploy the Cluster Autoscaler
 
@@ -202,7 +202,7 @@ kubectl get pod -n kube-system
 
 The Cluster Autoscaler pod should be running in the `kube-system` namespace.
 
-![Cluster Autoscaler running](images/eks-cluster-autoscaler-running.png)
+<img src="images/eks-cluster-autoscaler-running.png" alt="Cluster Autoscaler running" width="600">
 
 Check the logs to confirm it discovers the Auto Scaling Group. At this point the node group is at its minimum size (2), so scale-down is skipped:
 
@@ -210,7 +210,7 @@ Check the logs to confirm it discovers the Auto Scaling Group. At this point the
 kubectl logs -n kube-system deployment/cluster-autoscaler
 ```
 
-![Autoscaler logs](images/autoscaler-logs.png)
+<img src="images/autoscaler-logs.png" alt="Autoscaler logs" width="600">
 
 #### 7.6 Change the node group scaling limits
 
@@ -233,7 +233,7 @@ kubectl scale deployment nginx --replicas=20
 kubectl get pods
 ```
 
-![Scale up: pending pods](images/scale-up.png)
+<img src="images/scale-up.png" alt="Scale up: pending pods" width="600">
 
 **Scale down:** reduce the replicas again. The extra node is no longer needed and the autoscaler removes it.
 
@@ -242,7 +242,7 @@ kubectl scale deployment nginx --replicas=1
 kubectl get pods
 ```
 
-![Scale down](images/scale-down.png)
+<img src="images/scale-down.png" alt="Scale down" width="600">
 
 ### 8. Deploy a sample app
 
@@ -254,13 +254,13 @@ kubectl get pod       # nginx pod is running
 kubectl get svc       # shows the external DNS name
 ```
 
-![nginx deployment and service](images/load-balancer-external-ip.png)
+<img src="images/load-balancer-external-ip.png" alt="nginx deployment and service" width="600">
 
 A load balancer is created automatically for the `LoadBalancer` service. Its DNS name matches the external address shown by `kubectl get svc`. Open it in your browser to access the app.
 
-![Load balancer DNS name](images/load-balancer-dns.png)
+<img src="images/load-balancer-dns.png" alt="Load balancer DNS name" width="600">
 
-![Welcome to nginx](images/welcome-to-nginx.png)
+<img src="images/welcome-to-nginx.png" alt="Welcome to nginx" width="600">
 
 ---
 
