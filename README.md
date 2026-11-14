@@ -81,7 +81,7 @@ kubectl get nodes
 ```
 
 `aws configure list` shows your default region (mine is eu-central-2). `..update-kubeconfig` uses that region to find the cluster and adds it to your local kubeconfig; if no default region is set, add `--region <your-region>` (the region where you created the cluster). `kubectl cluster-info` should show the same API server endpoint as the console. `kubectl get nodes` returns nothing yet because there are no worker nodes.
-
+<br><br>
 
 <img src="images/cluster-info.png" alt="kubectl cluster-info" width="600">
 
@@ -199,7 +199,7 @@ kubectl get pod -n kube-system
 
 The Cluster Autoscaler pod should be running in the `kube-system` namespace.
 
-<img src="images/eks-cluster-autoscaler-running.png" alt="Cluster Autoscaler running" width="600">
+<img src="images/eks-cluster-autoscaler-running.png" alt="Cluster Autoscaler running" width="600"><br><br>
 
 Check the logs to confirm it discovers the Auto Scaling Group. At this point the node group is at its minimum size (2), so scale-down is skipped:
 
@@ -228,8 +228,8 @@ kubectl apply -f nginx.yaml
 kubectl get pod       # nginx pod is running
 kubectl get svc       # shows the external DNS name
 ```
-
-<img src="images/load-balancer-external-ip.png" alt="nginx deployment and service" width="600">
+<br><br>
+<img src="images/load-balancer-external-ip.png" alt="nginx deployment and service" width="600"><br><br>
 
 A load balancer is created automatically for the `LoadBalancer` service. Its DNS name matches the external address shown by `kubectl get svc`. Open it in your browser to access the app.
 
@@ -247,16 +247,16 @@ The nginx deployment from step 8 is the workload for the test, and the node grou
 kubectl scale deployment nginx --replicas=20
 kubectl get pods
 ```
-
+<br><br>
 <img src="images/scale-up.png" alt="Scale up: pending pods" width="600">
-
+<br><br>
 **Scale down:** reduce the replicas again. The extra node is no longer needed and the autoscaler removes it.
 
 ```bash
 kubectl scale deployment nginx --replicas=1
 kubectl get pods
 ```
-
+<br><br>
 <img src="images/scale-down.png" alt="Scale down" width="600">
 
 ---
