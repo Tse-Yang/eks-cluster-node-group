@@ -48,7 +48,7 @@ Reference: <https://docs.aws.amazon.com/eks/latest/userguide/creating-a-vpc.html
 - Default CIDR blocks
 - Submit
 
-<img src="images/create-stack.png" alt="Create stack" width="600"><br><br><br>
+<img src="images/create-stack.png" alt="Create stack" width="600">
 
 Wait until the stack status is `CREATE_COMPLETE`.
 
@@ -113,7 +113,7 @@ EKS → Clusters → `eks-cluster-test` → Compute → **Add node group**
 - **Subnets:** the 4 subnets from the VPC stack (fine for a demo; for production, use private subnets only)
 - **Remote access:** enabled, with an EC2 key pair (used for testing and troubleshooting; disable in production)
 
-<img src="images/eks-node-group.png" alt="Node group" width="600"> <br><br><br>
+<img src="images/eks-node-group.png" alt="Node group" width="600">
 
 When the node group is active, the EC2 instances join the cluster:
 
@@ -123,7 +123,7 @@ kubectl get nodes     # shows the 2 worker nodes
 
 <img src="images/nodes-ready-on-eks-node-group.png" alt="Nodes in the node group" width="600"> <br><br><br>
 
-<img src="images/two-instances-running.png" alt="kubectl get nodes" width="600"><br><br><br>
+<img src="images/two-instances-running.png" alt="kubectl get nodes" width="600">
 
 An Auto Scaling Group is created automatically for the node group:
 
@@ -174,8 +174,8 @@ The autoscaler finds the Auto Scaling Group through tags. EKS adds them to the m
 
 | Key | Value |
 |-----|-------|
-| k8s.io/cluster-autoscaler/enabled | true |
-| k8s.io/cluster-autoscaler/eks-cluster-test | owned |
+| `k8s.io/cluster-autoscaler/enabled` | `true` |
+| `k8s.io/cluster-autoscaler/eks-cluster-test` | `owned` |
 
 <img src="images/asg-tags.png" alt="ASG tags" width="600">
 
@@ -220,9 +220,27 @@ EKS → `eks-cluster-test` → Compute → `eks-node-group` → Edit → **Scali
 - **Desired size:** 2
 - **Maximum size:** 3
 
-#### 7.7 Test it
+### 8. Deploy a sample app
 
-A `t3.small` node supports only a small number of pods (around 11), so a few extra replicas fill the nodes quickly.
+`nginx.yaml` contains an Nginx deployment and a service of type `LoadBalancer`.
+
+```bash
+kubectl apply -f nginx.yaml
+kubectl get pod       # nginx pod is running
+kubectl get svc       # shows the external DNS name
+```
+
+<img src="images/load-balancer-external-ip.png" alt="nginx deployment and service" width="600">
+
+A load balancer is created automatically for the `LoadBalancer` service. Its DNS name matches the external address shown by `kubectl get svc`. Open it in your browser to access the app.
+
+<img src="images/load-balancer-dns.png" alt="Load balancer DNS name" width="600"> <br><br><br>
+
+<img src="images/welcome-to-nginx.png" alt="Welcome to nginx" width="600">
+
+### 9. Test auto scaling
+
+The nginx deployment from step 8 is the workload for the test, and the node group limits are now 1 / 2 / 3 (step 7.6). A `t3.small` node supports only a small number of pods (around 11), so a few extra replicas fill the nodes quickly.
 
 **Scale up:** increase the replicas until some pods stay `Pending` because the nodes are full. This triggers the autoscaler to add a node (a new EC2 instance takes a few minutes).
 
@@ -241,24 +259,6 @@ kubectl get pods
 ```
 
 <img src="images/scale-down.png" alt="Scale down" width="600">
-
-### 8. Deploy a sample app
-
-`nginx.yaml` contains an Nginx deployment and a service of type `LoadBalancer`.
-
-```bash
-kubectl apply -f nginx.yaml
-kubectl get pod       # nginx pod is running
-kubectl get svc       # shows the external DNS name
-```
-
-<img src="images/load-balancer-external-ip.png" alt="nginx deployment and service" width="600">
-
-A load balancer is created automatically for the `LoadBalancer` service. Its DNS name matches the external address shown by `kubectl get svc`. Open it in your browser to access the app.
-
-<img src="images/load-balancer-dns.png" alt="Load balancer DNS name" width="600"> <br><br><br>
-
-<img src="images/welcome-to-nginx.png" alt="Welcome to nginx" width="600">
 
 ---
 
