@@ -95,7 +95,7 @@ The kubelet on each worker node (EC2 instance) needs permissions through an IAM 
    - `AmazonEC2ContainerRegistryReadOnly` – pull images from ECR
    - `AmazonEKS_CNI_Policy` – networking between pods/nodes and other AWS services
 - Role name: `eks-node-group-role`
-
+<br><br>
 <img src="images/eks-node-group-role.png" alt="Node group role" width="600">
 
 ### 6. Create the node group
@@ -111,7 +111,7 @@ EKS → Clusters → `eks-cluster-test` → Compute → **Add node group**
 - **Scaling (desired / min / max):** 2 / 2 / 2 (changed later in step 7.6)
 - **Subnets:** the 4 subnets from the VPC stack (fine for a demo; for production, use private subnets only)
 - **Remote access:** enabled, with an EC2 key pair (used for testing and troubleshooting; disable in production)
-
+<br><br>
 <img src="images/eks-node-group.png" alt="Node group" width="600"><br><br>
 
 When the node group is active, the EC2 instances join the cluster:
