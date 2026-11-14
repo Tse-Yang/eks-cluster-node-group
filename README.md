@@ -112,7 +112,7 @@ EKS → Clusters → `eks-cluster-test` → Compute → **Add node group**
 - **Subnets:** the 4 subnets from the VPC stack (fine for a demo; for production, use private subnets only)
 - **Remote access:** enabled, with an EC2 key pair (used for testing and troubleshooting; disable in production)
 
-<img src="images/eks-node-group.png" alt="Node group" width="600">
+<img src="images/eks-node-group.png" alt="Node group" width="600"><br><br>
 
 When the node group is active, the EC2 instances join the cluster:
 
@@ -122,7 +122,7 @@ kubectl get nodes     # shows the 2 worker nodes
 
 <img src="images/nodes-ready-on-eks-node-group.png" alt="Nodes in the node group" width="600"> <br><br><br>
 
-<img src="images/two-instances-running.png" alt="kubectl get nodes" width="600">
+<img src="images/two-instances-running.png" alt="kubectl get nodes" width="600"><br><br>
 
 An Auto Scaling Group is created automatically for the node group:
 
