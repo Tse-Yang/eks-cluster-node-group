@@ -16,7 +16,7 @@ Kubernetes, AWS EKS, AWS IAM, AWS CloudFormation, AWS EC2 and Auto Scaling, OIDC
 - AWS CLI installed and configured (`aws configure`)
 - `kubectl` installed
 
-> **Cost warning:** the EKS control plane costs about $0.10/hour, plus the EC2 instances and the load balancer. Follow the [Cleanup](#cleanup) section when you are done.
+> **Note about Cost warning:** the EKS control plane costs about $0.10/hour, plus the EC2 instances and the load balancer. Follow the [Cleanup](#cleanup) section when you are done.
 
 ---
 
